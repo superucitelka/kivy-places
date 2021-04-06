@@ -1,0 +1,44 @@
+#:import math.ceil math
+
+BoxLayout:
+    orientation:'vertical'
+
+    MDToolbar:
+        title: 'Osobní databáze'
+        md_bg_color: .8, .2, .2, 1
+        specific_text_color: 1, 1, 1, 1
+
+    MDBottomNavigation:
+        id: navigation
+        panel_color: .8, .8, .4, 1
+
+        MDBottomNavigationItem:
+            name: 'screen 1'
+            text: 'Osobní databáze'
+            icon: 'card-bulleted'
+
+            DatabaseScreen:
+
+
+        MDBottomNavigationItem:
+            name: 'screen 2'
+            text: 'BMI'
+            icon: 'text'
+
+            BMIScreen:
+
+<BMIScreen>:
+    name: 'bmiscreen'
+
+    FloatLayout:
+        canvas:
+            Color:
+                rgba: app.theme_cls.primary_dark
+            RoundedRectangle:
+                pos: self.pos
+                size: self.size
+                radius: [10, 10, 10, 10]
+
+
+<DatabaseScreen>
+    name:'databasescreen'
