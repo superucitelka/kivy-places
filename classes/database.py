@@ -72,6 +72,14 @@ class Database:
         except:
             return False
 
+    def create_places(self, places):
+        try:
+            self.session.add_all(places)
+            self.session.commit()
+            return True
+        except:
+            return False
+
     def create_photo(self, photo):
         try:
             self.session.add(photo)
@@ -90,10 +98,20 @@ class Database:
 
     def read_places(self, order = Place.name):
         try:
-            result = self.session.query(Place).order_by(order).all()
+            result = self.session.query(Place).all()
             return result
         except:
+            print("Chyba")
             return False
+
+    def read_categories(self, order = Category.name):
+        try:
+            result = self.session.query(Category).order_by(order).all()
+            return result
+        except:
+            print("Chyba")
+            return False
+
 
     def read_place_by_id(self, id):
         try:
@@ -102,9 +120,16 @@ class Database:
         except:
             return False
 
-    def read_place_by_category(self, category):
+    def read_places_by_category(self, category):
         try:
             result = self.session.query(Place).join(Category).filter(Category.name.like(f'%{name}%')).order_by(Place.name).all()
+            return result
+        except:
+            return False
+
+    def read_category_by_name(self, name):
+        try:
+            result = self.session.query(Category).filter(Category.name.like(f'%{name}%')).all()
             return result
         except:
             return False

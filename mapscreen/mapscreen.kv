@@ -1,0 +1,79 @@
+#:include mapscreen/searchpopupmenu.kv
+#:import MapView kivy_garden.mapview.MapView
+
+<PlaceContent>:
+    orientation: 'vertical'
+    size_hint_x: 1
+    size_hint_y: None
+    height: "300dp"
+
+    MDTextField:
+        id: place_name
+        hint_text: 'Název'
+        color_mode: 'accent'
+        required: True
+        helper_text_mode: "on_error"
+        helper_text: "Pole musí být vyplněno"
+        pos_hint: {'center_x': .5, 'center_y': .9}
+
+    MDTextField:
+        id: place_description
+        multiline: True
+        hint_text: 'Popis'
+        color_mode: 'accent'
+        pos_hint: {'center_x': .5, 'center_y': .5}
+
+    MDDropDownItem:
+        id: category_item
+        pos_hint: {'center_x': .5, 'center_y': .4}
+        size_hint_x: 1
+        text: 'Kategorie'
+        color_mode: 'accent'
+        on_release: self.parent.menu_categories.open()
+
+    MDTextField:
+        id: place_url
+        hint_text: 'URL'
+        color_mode: 'accent'
+        pos_hint: {'center_x': .5, 'center_y': .3}
+
+    MDTextField:
+        id: place_rate
+        hint_text: 'Hodnocení'
+        color_mode: 'accent'
+        helper_text_mode: "on_error"
+        helper_text: "Zadejte číslo v rozsahu 1-5"
+        max_text_length: 1
+        pos_hint: {'center_x': .5, 'center_y': .2}
+
+
+<PlacesMapView>
+    lat: 49.9
+    lon: 17.9
+    zoom: 12
+    on_zoom:
+        self.zoom = 10 if self.zoom < 10 else self.zoom
+    on_lat:
+        self.start_getting_places_in_fov()
+    on_lon:
+        self.start_getting_places_in_fov()
+
+<MapScreen>
+    orientation: 'vertical'
+    pos_hint: {"top": .9}
+    size_hint_y: .9
+    height: self.minimum_height
+
+    MDToolbar:
+        title: "Vyhledat"
+        left_action_items: [['magnify', lambda x: app.search_menu.open()]]
+        md_bg_color: 0, 0, 0, .4
+        MDLabel:
+            id: edit_mode_label
+            text: "Editační mód: vypnut"
+        EditModeSwitch:
+            id: edit_mode
+            pos_hint: {'center_x': .5, 'center_y': .5}
+            width: dp(64)
+
+    PlacesMapView:

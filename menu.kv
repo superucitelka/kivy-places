@@ -1,0 +1,87 @@
+#:include homescreen/homescreen.kv
+#:include mapscreen/mapscreen.kv
+
+
+<ItemDrawer>:
+    theme_text_color: "Custom"
+    #on_release: self.parent.set_color_item(self)
+
+    IconLeftWidget:
+        id: icon
+        icon: root.icon
+        theme_text_color: "Custom"
+
+
+<ContentNavigationDrawer>:
+    orientation: "vertical"
+    padding: "8dp"
+    spacing: "8dp"
+
+    AnchorLayout:
+        anchor_x: "left"
+        size_hint_y: None
+        height: avatar.height
+
+        Image:
+            id: avatar
+            size_hint: None, None
+            size: "300dp", "150dp"
+            source: "images/skola-logo.png"
+
+    ScrollView:
+
+        DrawerList:
+            id: md_list
+
+            ItemDrawer:
+                id: menu1
+                text: "Přehled míst"
+                icon: "folder"
+                on_release:
+                    root.screen_manager.current = "homescreen"
+                    app.root.ids.homescreen.redraw()
+                    root.nav_drawer.set_state("close")
+
+
+            ItemDrawer:
+                id: menu2
+                text: "Mapa"
+                icon: "star"
+                #disabled: True
+                on_release:
+                    root.screen_manager.current = "mapscreen"
+                    root.nav_drawer.set_state("close")
+
+
+RootScreen:
+
+    MDToolbar:
+        id: toolbar
+        pos_hint: {"top": 1}
+        elevation: 10
+        title: "Oblíbená místa"
+        left_action_items: [["menu", lambda x: nav_drawer.set_state("open")]]
+
+    MDNavigationLayout:
+        x: toolbar.height
+
+        ScreenManager:
+            id: screen_manager
+
+            Screen:
+                name: "homescreen"
+                HomeScreen:
+                    id: homescreen
+
+            Screen:
+                name: "mapscreen"
+                MapScreen:
+
+        MDNavigationDrawer:
+            id: nav_drawer
+
+            ContentNavigationDrawer:
+                id: content_drawer
+                screen_manager: screen_manager
+                nav_drawer: nav_drawer
+
