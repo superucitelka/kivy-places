@@ -1,5 +1,6 @@
 #:include homescreen/homescreen.kv
 #:include mapscreen/mapscreen.kv
+#:include photoscreen/photoscreen.kv
 
 
 <ItemDrawer>:
@@ -42,7 +43,6 @@
                     app.root.ids.homescreen.redraw()
                     root.nav_drawer.set_state("close")
 
-
             ItemDrawer:
                 id: menu2
                 text: "Mapa"
@@ -52,6 +52,13 @@
                     root.screen_manager.current = "mapscreen"
                     root.nav_drawer.set_state("close")
 
+            ItemDrawer:
+                id: menu3
+                text: "Fotogalerie"
+                icon: "camera"
+                on_release:
+                    root.screen_manager.current = "photoscreen"
+                    root.nav_drawer.set_state("close")
 
 RootScreen:
 
@@ -76,6 +83,11 @@ RootScreen:
             Screen:
                 name: "mapscreen"
                 MapScreen:
+
+            Screen:
+                name: "photoscreen"
+                PhotoScreen:
+                    id: photoscreen
 
         MDNavigationDrawer:
             id: nav_drawer

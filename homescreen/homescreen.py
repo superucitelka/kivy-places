@@ -13,9 +13,7 @@ class PlaceCard(MDCard):
         self.place = place
 
     def on_release(self):
-        menu = LocationPopupMenu()
-        menu.title = self.place.name
-        menu.text = self.place.description
+        menu = LocationPopupMenu(self.place.id)
         menu.open()
 
 class ScrollList(ScrollView):
@@ -31,9 +29,9 @@ class StarButton(MDIconButton):
                 if obj.icon == "star":
                     rate += 1
         self.parent.parent.place.rate = rate
-        self.app = App.get_running_app()
-        self.app.db.update()
-        self.app.root.ids.homescreen.redraw()
+        app = App.get_running_app()
+        app.db.update()
+        app.root.ids.homescreen.redraw()
 
 
 class SortList(MDList):
@@ -57,7 +55,7 @@ class HomeScreen(MDBoxLayout):
             place_card.ids.name_label.text = place.name
             place_card.ids.category_label.text = place.category.name
             if place.photos:
-                place_card.ids.place_image.source = place.photos[0].url
+                place_card.ids.place_image.source = self.app.root_path + '/gallery/' + place.photos[0].url
             else:
                 place_card.ids.place_image.source = 'homescreen/images/nopicture.jpg'
             for i in range(5):

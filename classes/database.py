@@ -104,6 +104,22 @@ class Database:
             print("Chyba")
             return False
 
+
+    def read_photos(self):
+        try:
+            result = self.session.query(Photo).order_by(Photo.place_id).all()
+            return result
+        except:
+            print("Chyba")
+            return False
+
+    def read_photo_by_id(self, id):
+        try:
+            result = self.session.query(Photo).get(id)
+            return result
+        except:
+            return False
+
     def read_categories(self, order = Category.name):
         try:
             result = self.session.query(Category).order_by(order).all()

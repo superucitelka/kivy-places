@@ -1,3 +1,39 @@
+<MySwiper@MDSwiperItem>
+    FitImage:
+        id: photo_image
+        source: "homescreen/images/nopicture.jpg"
+        radius: [20,]
+
+<LocationContent>:
+    orientation: 'vertical'
+    size_hint_x: 1
+    size_hint_y: None
+    height: app.root.ids.homescreen.height - dp(50)
+
+    MDBoxLayout:
+        orientation: 'vertical'
+        pos_hint: {'center_x': .5, 'center_y': 1}
+
+        MDLabel:
+            id: place_detail
+            size_hint_y: .1
+            pos_hint: {'center_x': .5, 'top_y': 0}
+            text: ''
+
+        ScrollView:
+            size_hint_y: .2
+            pos_hint: {'center_x': .5, 'top_y': .9}
+            MDLabel:
+                id: place_description
+                size_hint_y: None
+                text: ''
+
+        MDSwiper:
+            id: photogallery
+            size_hint_y: .5
+            pos_hint: {'center_x': .5, 'top_y': .8}
+
+
 <StarButton>
     icon: "star"
 

@@ -1,3 +1,5 @@
+import os
+
 from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import ObjectProperty, StringProperty, BooleanProperty
 from kivy.uix.screenmanager import Screen
@@ -10,6 +12,7 @@ from homescreen.homescreen import HomeScreen
 from mapscreen.searchpopupmenu import SearchPopupMenu
 from mapscreen.mapscreen import MapScreen
 from mapscreen.mapscreen import PlaceMarker
+from photoscreen.photoscreen import PhotoScreen
 
 import sqlite3
 
@@ -48,6 +51,7 @@ class MenuApp(MDApp):
     connection = None
     cursor = None
     search_menu = None
+    root_path = os.path.dirname(os.path.realpath(__file__))
     def build(self):
         return
 

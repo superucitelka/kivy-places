@@ -1,0 +1,116 @@
+<LoadDialog>:
+    BoxLayout:
+        size: root.size
+        pos: root.pos
+        orientation: "vertical"
+        FileChooserListView:
+            id: filechooser
+
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            Button:
+                text: "Cancel"
+                on_release: root.cancel()
+
+            Button:
+                text: "Load"
+                on_release: root.load(filechooser.path, filechooser.selection)
+
+<PhotoContent>:
+    orientation: 'vertical'
+    size_hint_x: 1
+    size_hint_y: None
+    height: "200dp"
+
+    MDBoxLayout:
+        orientation: 'horizontal'
+        pos_hint: {'center_x': .5, 'center_y': .9}
+
+        #MDLabel:
+        #    id: photo_url
+        #    text: 'URL'
+
+        FitImage:
+            id: photo_url
+            source: "homescreen/images/nopicture.jpg"
+            text: "URL"
+            radius: [20,]
+            size_hint_x: .5
+
+        Button:
+            id: photo_url_button
+            text: 'Procházet'
+            pos_hint: {'right': 0}
+            size_hint_x: .5
+            size_hint_y: .5
+            on_release: self.parent.parent.show_load()
+
+    MDTextField:
+        id: photo_title
+        text: 'Titulek'
+        pos_hint: {'center_x': .5, 'center_y': .8}
+
+    MDDropDownItem:
+        id: photo_type
+        pos_hint: {'center_x': .5, 'center_y': .7}
+        size_hint_x: 1
+        text: 'barevná'
+        on_release: self.parent.menu_types.open()
+
+    MDDropDownItem:
+        id: place_name
+        pos_hint: {'center_x': .5, 'center_y': .5}
+        size_hint_x: 1
+        text: 'place'
+        on_release: self.parent.menu_places.open()
+
+<PhotoImage@AsyncImage>
+    pos_hint: {'center': 1, 'center': 1}
+    canvas:
+        Color:
+            rgb: (1, 1, 0)
+        Rectangle:
+            texture: self.texture
+            size: self.width, self.height
+            pos: self.x, self.y
+
+<ColoredLabel@MDLabel>:
+    pos_hint: {'center': .5, 'center': .5}
+    size_hint_y: None
+    height: self.texture_size[1] + 20
+    halign: 'center'
+    canvas.before:
+        Color:
+            rgb: .9, .9, .9
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<PhotoScreen>
+    orientation: "vertical"
+    pos_hint: {"top": .9}
+    size_hint_y: .9
+    height: self.minimum_height
+
+    PhotoCarousel:
+        id: photocarousel
+
+    BottomNav:
+        MDToolbar:
+            id: bottom_toolbar1
+            title: "Fotogalerie"
+            icon: "plus"
+            mode: "end"
+            type: "bottom"
+            pos_hint: {"left": .1}
+            on_action_button: self.parent.plus_button()
+            halign: "left"
+
+            Button:
+                text: "Editovat"
+                on_release: self.parent.parent.edit_button()
+
+            Button:
+                text: "Smazat"
+                on_release: self.parent.parent.delete_button()
